@@ -2,29 +2,16 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Product;
 use AppBundle\Form\ProductType;
 
-class DefaultController extends Controller
+class ProductController extends Controller
 {
     /**
-     * @Route("/", name="index")
-     */
-    public function indexAction(Request $request)
-    {
-        $adverts = $this->container->get('app.product_manager')->getProducts();
-        $pagination = $this->container->get('app.paginator')->paginate($adverts);
-        
-    	return $this->render('AppBundle:Default:index.html.twig', array(
-    		'pagination' => $pagination,
-	    ));
-    }
-    
-    /**
-     * @Route("/new", name="new")
+     * @Route("/new_product", name="new_product")
      */
     public function newProductAction(Request $request)
     {
@@ -43,18 +30,19 @@ class DefaultController extends Controller
             return $this->redirectToRoute('index');
         }
         
-        return $this->render('AppBundle:Default:new.html.twig', [ 'form' => $form->createView()]);
+        return $this->render('AppBundle:Product:new.html.twig', [ 'form' => $form->createView()]);
     }
     
     /**
-     * @Route("/my", name="my")
+     * @Route("/my_products", name="my_products")
      */
     public function myProductsAction(Request $request){
         $adverts = $this->container->get('app.product_manager')->getProducts($this->getUser());
         $pagination = $this->container->get('app.paginator')->paginate($adverts);
         
-    	return $this->render('AppBundle:Default:index.html.twig', array(
+    	return $this->render('AppBundle:Index:index.html.twig', array(
     		'pagination' => $pagination,
 	    ));
     }
+    
 }
