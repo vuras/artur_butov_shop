@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Product;
-use AppBundle\Form\ProductType;
+use AppBundle\Form\Type\ProductType;
 
 class ProductController extends Controller
 {
