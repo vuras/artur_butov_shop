@@ -1,0 +1,8 @@
+services:
+    app.product_manager:
+        class: AppBundle\Managers\ProductManager
+        arguments: [ '@doctrine.orm.default_entity_manager']
+        
+    app.paginator:
+        class: AppBundle\Paginator\Paginator
+        arguments: [ '@knp_paginator', '@request_stack' ]
