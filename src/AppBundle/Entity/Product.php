@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\Table(name="product")
  * @Vich\Uploadable
  *
@@ -31,6 +31,11 @@ class Product
      * @ORM\Column(type="float")
      */
     protected $price;
+    
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $quantity;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -39,14 +44,14 @@ class Product
      * 
      * @var File
      */
-    private $imageFile;
+    protected $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
      * @var string
      */
-    private $imageName;
+    protected $imageName;
     
     /**
      * @ORM\Column(type="text")
@@ -59,7 +64,10 @@ class Product
      */
     protected $user;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="product")
+     */
+    protected $orders;
 
     /**
      * Get id
@@ -212,5 +220,70 @@ class Product
     public function getImageName()
     {
         return $this->imageName;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Product
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \AppBundle\Entity\OrderProduct $order
+     *
+     * @return Product
+     */
+    public function addOrder(\AppBundle\Entity\OrderProduct $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \AppBundle\Entity\OrderProduct $order
+     */
+    public function removeOrder(\AppBundle\Entity\OrderProduct $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <div class="thumbnail">
+        <img class="img-responsive" src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" alt="">
+        <div class="caption-full">
+            <h4 class="pull-right">{{ product.price }}</h4>
+            <h4><a href="#">{{ product.name }}</a>
+            </h4>
+            <p>{{ product.description }}</p>
+        </div>
+    </div>
+    
+{% endblock body%}

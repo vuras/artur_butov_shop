@@ -1,7 +1,16 @@
 services:
+    app.product_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Product
+    
     app.product_manager:
         class: AppBundle\Managers\ProductManager
-        arguments: [ '@doctrine.orm.default_entity_manager']
+        arguments: [ '@app.product_repository']
+        
+    app.cart_manager:
+        class: AppBundle\Managers\CartManager
         
     app.paginator:
         class: AppBundle\Paginator\Paginator

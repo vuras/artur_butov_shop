@@ -18,6 +18,11 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
  */
 class ProductType extends AbstractType
 {
+    /**
+     * 
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -42,11 +47,21 @@ class ProductType extends AbstractType
         ;
     }
     
-    public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver) {
+    /**
+     * 
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver) 
+    {
         $resolver->setDefaults(array('data_class' => 'AppBundle\Entity\Product' ));
     }
         
-    public function getBlockPrefix(){
+    /**
+     * 
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
         return 'product';
     }
 }

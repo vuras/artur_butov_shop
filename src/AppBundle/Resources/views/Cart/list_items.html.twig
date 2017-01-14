@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    {% if cart.products is empty %}
+        <p>Cart is empty</p>
+    {% else %}
+        {% for product in cart.products %}
+            <p>{{ product.name }}</p>
+        {% endfor %}
+    {% endif %}
+    
+    <a class="form-control" href="{{ path('buy') }}">Buy</a>
+    
+{% endblock %}

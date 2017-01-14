@@ -15,34 +15,63 @@ class ProductController extends Controller
      */
     public function newProductAction(Request $request)
     {
-        $advert = new Product();
-        $advert->setUser($this->getUser());
+        $product = new Product();
+        $product->setUser($this->getUser());
         
-        $form = $this->createForm(ProductType::class, $advert);
+        $form = $this->createForm(ProductType::class, $product);
         
         $form->handleRequest($request);
         
         if($form->isValid() && $form->isSubmitted()){
             $em = $this->getDoctrine()->getManager();
-            $em->persist($advert);
+            $em->persist($product);
             $em->flush();
             
             return $this->redirectToRoute('index');
         }
         
-        return $this->render('AppBundle:Product:new.html.twig', [ 'form' => $form->createView()]);
+        return $this->render('AppBundle:Product:new.html.twig', [ 
+            'form' => $form->createView()
+        ]);
+    }
+    
+    /**
+     * @Route("/show_product/{id}", name="show_product")
+     */
+    public function showProductAction($id)
+    {
+        $product = $this->get('app.product_manager')->getProductById($id);
+        
+        return $this->render('AppBundle:Product:item.html.twig', [
+            'product' => $product
+        ]);
     }
     
     /**
      * @Route("/my_products", name="my_products")
      */
     public function myProductsAction(Request $request){
-        $adverts = $this->container->get('app.product_manager')->getProducts($this->getUser());
-        $pagination = $this->container->get('app.paginator')->paginate($adverts);
+        $products = $this->get('app.product_manager')->getProducts($this->getUser());
+        $pagination = $this->get('app.paginator')->paginate($products);
         
-    	return $this->render('AppBundle:Index:index.html.twig', array(
+    	return $this->render('AppBundle:Product:list_user_products.html.twig', [
     		'pagination' => $pagination,
-	    ));
+	]);
+    }
+    
+    /**
+     * @Route("remove_product/{id}", name="remove_product")
+     */
+    public function removeProductAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $product = $this->get('app.product_manager')->getProductById($id);
+        
+        $em->remove($product);
+        $em->flush();
+        
+        return $this->redirectToRoute('my_products');
     }
     
 }

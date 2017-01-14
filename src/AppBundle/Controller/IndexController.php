@@ -13,12 +13,12 @@ class IndexController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $adverts = $this->container->get('app.product_manager')->getProducts();
-        $pagination = $this->container->get('app.paginator')->paginate($adverts);
+        $products = $this->container->get('app.product_manager')->getProducts();
+        $pagination = $this->container->get('app.paginator')->paginate($products);
         
     	return $this->render('AppBundle:Index:index.html.twig', array(
-    		'pagination' => $pagination,
-	    ));
+            'pagination' => $pagination,
+        ));
     }
     
 }

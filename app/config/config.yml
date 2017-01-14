@@ -73,7 +73,7 @@ vich_uploader:
     db_driver: orm # or mongodb or propel or phpcr
     mappings:
         product_image:
-            uri_prefix:         Assets//images/products
+            uri_prefix:         /Assets/images/products
             upload_destination: '%kernel.root_dir%/../web/Assets/images/products'
 
 fos_user:

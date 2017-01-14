@@ -4,6 +4,8 @@ namespace AppBundle\Managers;
 
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /*
@@ -19,27 +21,40 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class ProductManager 
 {
-    private $em;
+    /**
+     *
+     * @var EntityRepository 
+     */
+    private $repository;
     
-    public function __construct( EntityManager $em) {
-        $this->em = $em;
+    /**
+     * 
+     * @param EntityRepository $repository
+     */
+    public function __construct(EntityRepository $repository){
+        $this->repository = $repository;
     }
     
-    public function getProducts($user = false)
+    /**
+     * 
+     * @param UserInterface $user
+     * @return type
+     */
+    public function getProducts(UserInterface $user = null)
     {
-    	$repository = $this->em->getRepository('AppBundle:Product');
+        if(is_null($user))
+            return $this->repository->findAll();
         
-    	$query = $repository->createQueryBuilder('a');
-        
-        if($user)
-            $query->where('a.user = :user')
-                  ->setParameter('user', $user);
-        
-        $adverts = $query->getQuery()
-                         ->getResult();
-        
-        return $adverts;
+        return $this->repository->findByUser($user);
     }
     
-    
+    /**
+     * 
+     * @param int $id
+     * @return type
+     */
+    public function getProductById($id)
+    {
+    	return $this->repository->find($id);
+    }
 }

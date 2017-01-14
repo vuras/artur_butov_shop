@@ -12,14 +12,33 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class Paginator 
 {
+    /**
+     *
+     * @var PaginatorInterface
+     */
     private $paginator;
+    
+    /**
+     *
+     * @var RequestStack 
+     */
     private $request;
     
+    /**
+     * 
+     * @param PaginatorInterface $paginator
+     * @param RequestStack $request
+     */
     public function __construct(PaginatorInterface $paginator, RequestStack $request) {
         $this->paginator = $paginator;
         $this->request = $request;
     }
     
+    /**
+     * 
+     * @param type $items
+     * @return PaginationInterface
+     */
     public function paginate($items)
     {
         $pagination = $this->paginator->paginate(
