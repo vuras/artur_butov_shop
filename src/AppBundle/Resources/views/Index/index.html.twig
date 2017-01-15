@@ -4,9 +4,9 @@
     
     <div class="order">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 pull-right">
                 <select class="form-control" id="order-by" required>
-                    <option value="" selected >Filter by</option>
+                    <option value="" selected >Order by</option>
                     <option value="id" data-direction="desc">Latest items</option>
                     <option value="price" data-direction="desc">Highest price</option>
                     <option value="price" data-direction="asc">Lowest price</option>
@@ -15,38 +15,52 @@
         </div>
     </div>
     
-    <div class="products">
-            {% for product in pagination %}
-                <div class="item" data-product-id="{{ product.id }}">
-                    <div class="col-md-3">
-                        <a href="{{ path('show_product', {'id' : product.id}) }}">
-                            <img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" class="img-thumbnail center-block" alt="{{ product.name }}" />
-                        </a>
-                        <h4 class="text-center">{{ product.name }}</h4>
-                        <p class="text-center">&euro;{{ product.price }} </p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input type="number" class="quantity form-control text-center" value="1" min="0">
-                            </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="categories">
+                <div class="list-group">
+                    {% for id, category in categories %}
+                            <a href="{{ path('filter_by', {'by' : 'category', 'value' : id}) }}" class="category-item list-group-item">{{ category }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+                
+        <div class="col-md-9">
+            <div class="products">
+                    {% for product in pagination %}
+                        <div class="item" data-product-id="{{ product.id }}">
                             <div class="col-md-3">
-                                <span class="quantity-left text-center">{{ product.quantity }} left</span>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="add-to-cart">
-                                    <button type="button" class="btn btn-success btn-sm center-block">
-                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                                    </button>
+                                <a href="{{ path('show_product', {'id' : product.id}) }}">
+                                    <img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" class="img-thumbnail center-block" alt="{{ product.name }}" />
+                                </a>
+                                <h4 class="text-center">{{ product.name }}</h4>
+                                <p class="text-center">&euro;{{ product.price }} </p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="number" class="quantity form-control text-center" value="1" min="0">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="quantity-left text-center">{{ product.quantity }} left</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="add-to-cart">
+                                            <button type="button" class="btn btn-success btn-sm center-block">
+                                                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            {% endfor %}
-    </div>
+                    {% endfor %}
+            </div>
 
-    <div class="col-md-2 col-md-offset-5">
-            <div class="navigation">	
-            {{ knp_pagination_render(pagination) }}
+            <div class="col-md-2 col-md-offset-5">
+                    <div class="navigation">	
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
         </div>
     </div>
 

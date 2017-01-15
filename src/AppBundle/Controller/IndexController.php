@@ -15,9 +15,11 @@ class IndexController extends Controller
     {
         $products = $this->container->get('app.product_repository_manager')->getAll();
         $pagination = $this->container->get('app.paginator')->paginate($products);
+        $categories = $this->getParameter('categories');
         
     	return $this->render('AppBundle:Index:index.html.twig', array(
             'pagination' => $pagination,
+            'categories' => $categories
         ));
     }
     
@@ -29,9 +31,26 @@ class IndexController extends Controller
     {
         $products = $this->container->get('app.product_repository_manager')->getOrdered($by, $direction);
         $pagination = $this->container->get('app.paginator')->paginate($products);
+        $categories = $this->getParameter('categories');
         
     	return $this->render('AppBundle:Index:index.html.twig', array(
             'pagination' => $pagination,
+            'categories' => $categories
+        ));
+    }
+    
+    /**
+     * @Route("filter_by/{by}/{value}", options={"expose"=true}, name="filter_by")
+     */
+    public function filterByAction($by, $value)
+    {
+        $products = $this->container->get('app.product_repository_manager')->getFiltered($by, $value);
+        $pagination = $this->container->get('app.paginator')->paginate($products);
+        $categories = $this->getParameter('categories');
+        
+    	return $this->render('AppBundle:Index:index.html.twig', array(
+            'pagination' => $pagination,
+            'categories' => $categories
         ));
     }
     

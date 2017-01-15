@@ -65,4 +65,16 @@ class ProductRepositoryManager implements RepositoryManagerInterface
     {
         return $this->repository->findOrderedBy($by, $direction);
     }
+    
+    /**
+     * 
+     * @param string $by
+     * @param string $value
+     */
+    public function getFiltered($by, $value)
+    {
+        return $this->repository->findBy([
+            $by => $value
+        ]);
+    }
 }
