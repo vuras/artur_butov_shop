@@ -68,7 +68,21 @@ class Cart
     {
         foreach($this->products as $p){
             if($p->getId() === $product->getId()){
-                $this->products->removeElement($this->products->current());
+                $this->products->removeElement($p);
+            }
+        }
+    }
+    
+    /**
+     * 
+     * @param Product $product
+     * @return boolean
+     */
+    public function getProduct(Product $product)
+    {
+        foreach($this->products as $p){
+            if($p->getId() === $product->getId()){
+                return $p;
             }
         }
     }
@@ -87,6 +101,15 @@ class Cart
      * @param float $total
      */
     public function setTotal($total) 
+    {
+        $this->total = $total;
+    }
+    
+    /**
+     * 
+     * @param float $total
+     */
+    public function updateTotal($total) 
     {
         $this->total += $total;
     }

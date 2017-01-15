@@ -40,7 +40,7 @@ class ProductController extends Controller
      */
     public function showProductAction($id)
     {
-        $product = $this->get('app.product_manager')->getProductById($id);
+        $product = $this->get('app.product_repository_manager')->getProductById($id);
         
         return $this->render('AppBundle:Product:item.html.twig', [
             'product' => $product
@@ -51,7 +51,7 @@ class ProductController extends Controller
      * @Route("/my_products", name="my_products")
      */
     public function myProductsAction(Request $request){
-        $products = $this->get('app.product_manager')->getProducts($this->getUser());
+        $products = $this->get('app.product_repository_manager')->getProducts($this->getUser());
         $pagination = $this->get('app.paginator')->paginate($products);
         
     	return $this->render('AppBundle:Product:list_user_products.html.twig', [
@@ -66,7 +66,7 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        $product = $this->get('app.product_manager')->getProductById($id);
+        $product = $this->get('app.product_repository_manager')->getProductById($id);
         
         $em->remove($product);
         $em->flush();

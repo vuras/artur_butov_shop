@@ -5,8 +5,8 @@ services:
         arguments:
             - AppBundle\Entity\Product
     
-    app.product_manager:
-        class: AppBundle\Managers\ProductManager
+    app.product_repository_manager:
+        class: AppBundle\Repository\ProductRepositoryManager
         arguments: [ '@app.product_repository']
         
     app.cart_manager:

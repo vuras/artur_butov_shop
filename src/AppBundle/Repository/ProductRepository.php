@@ -20,9 +20,22 @@ class ProductRepository extends EntityRepository
      */
     public function findByUser(UserInterface $user = null)
     {
-        return $this->createQueryBuilder('a')
-                ->where('a.user = :user')
+        return $this->createQueryBuilder('p')
+                ->where('p.user = :user')
                 ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult();
+    }
+    
+    /**
+     * 
+     * @param string $by
+     * @param string $direction
+     */
+    public function findOrderedBy($by, $direction)
+    {
+        return $this->createQueryBuilder('p')
+                ->orderBy("p.{$by}", $direction)
                 ->getQuery()
                 ->getResult();
     }

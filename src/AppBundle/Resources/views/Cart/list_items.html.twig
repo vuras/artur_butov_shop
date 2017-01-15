@@ -29,9 +29,9 @@
                         </td>
                         <td data-th="Price">&euro;{{ product.price }}</td>
                         <td data-th="Quantity">
-                                <input type="number" class="form-control text-center" value="{{ product.quantity }}">
+                                <input type="number" class="form-control text-center" value="{{ product.quantity }}" min="0">
                         </td>
-                        <td data-th="Subtotal" class="text-center">&euro;1.99</td>
+                        <td data-th="Subtotal" class="text-center">&euro;{{ product.quantity * product.price }}</td>
                         <td class="actions" data-th="">
                                 <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
                                 <a href="{{ path('remove_from_cart', { 'id' : product.id }) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>								

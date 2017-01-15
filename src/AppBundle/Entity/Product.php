@@ -242,6 +242,20 @@ class Product
 
         return $this;
     }
+    
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Product
+     */
+    public function updateQuantity($quantity)
+    {
+        $this->quantity += $quantity;
+
+        return $this;
+    }
 
     /**
      * Get quantity

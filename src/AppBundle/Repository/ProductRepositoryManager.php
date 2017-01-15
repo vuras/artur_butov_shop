@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Managers;
+namespace AppBundle\Repository;
 
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\ORM\EntityManager;
@@ -15,11 +15,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 
 /**
- * Description of AdvertManager
+ * Description of ProductRepositoryManager
  *
  * @author Arturas
  */
-class ProductManager 
+class ProductRepositoryManager 
 {
     /**
      *
@@ -56,5 +56,15 @@ class ProductManager
     public function getProductById($id)
     {
     	return $this->repository->find($id);
+    }
+    
+    /**
+     * 
+     * @param string $by
+     * @param string $direction
+     */
+    public function getOrderedProducts($by, $direction)
+    {
+        return $this->repository->findOrderedBy($by, $direction);
     }
 }

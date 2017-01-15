@@ -2,13 +2,19 @@
 
 {% block body %}
     
-    <div class="thumbnail">
-        <img class="img-responsive" src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" alt="">
-        <div class="caption-full">
-            <h4 class="pull-right">{{ product.price }}</h4>
-            <h4><a href="#">{{ product.name }}</a>
-            </h4>
-            <p>{{ product.description }}</p>
+    <div class="item">
+        <div class="thumbnail">
+            <img class="img-responsive" src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" alt="">
+            <div class="caption-full">
+                <h4 class="pull-right"><Strong>&euro;{{ product.price }}</strong></h4>
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+            </div>
+            <div class="add-to-cart">
+                <button type="button" class="btn btn-success center-block">
+                    <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
     </div>
     

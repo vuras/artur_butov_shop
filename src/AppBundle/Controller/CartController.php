@@ -19,12 +19,6 @@ class CartController extends Controller
      */
     public function listItemsAction(Request $request)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $this->addFlash('info', 'Please login or register');
-            
-            return $this->redirectToRoute('fos_user_security_login');
-        }
-        
         $session = $request->getSession();
         $cart = $session->get('cart');
         
@@ -34,11 +28,12 @@ class CartController extends Controller
     }
     
     /**
-     * @Route("add_to_cart/{id}", name="add_to_cart")
+     * @Route("add_to_cart/{id}/{quantity}", options={"expose"=true}, name="add_to_cart")
      */
-    public function addToCartAction(Request $request, $id)
+    public function addToCartAction(Request $request, $id, $quantity)
     {
-        $product = $this->get('app.product_manager')->getProductById($id);
+        $product = $this->get('app.product_repository_manager')->getProductById($id);
+        $product->setQuantity($quantity);
         
         $cartManager = $this->get('app.cart_manager');
         
@@ -50,6 +45,8 @@ class CartController extends Controller
         $cartManager->addToCart($product);
         $session->set('cart', $cartManager->getCart());
         
+        $this->addFlash('info', 'Product added to cart');
+        
         return $this->redirectToRoute('index');
     }
     
@@ -58,6 +55,12 @@ class CartController extends Controller
      */
     public function checkoutAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $this->addFlash('info', 'Please login or register');
+            
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+        
         $session = $request->getSession();
         $cart = $session->get('cart');
         
@@ -75,7 +78,7 @@ class CartController extends Controller
         $session = $request->getSession();
         $cart = $session->get('cart');
         
-        $product = $this->get('app.product_manager')->getProductById($id);
+        $product = $this->get('app.product_repository_manager')->getProductById($id);
         $cartManager = $this->get('app.cart_manager');
         $cartManager->setCart($cart);
         $cart = $cartManager->removeFromCart($product);

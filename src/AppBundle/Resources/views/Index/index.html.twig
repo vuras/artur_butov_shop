@@ -5,29 +5,43 @@
     <div class="order">
         <div class="row">
             <div class="col-md-2">
-                <select class="form-control" id="orderBy">
-                    <option value="id">Latest items</option>
-                    <option value="highest">Highest price</option>
-                    <option value="lowest">Lowest price</option>
+                <select class="form-control" id="order-by" required>
+                    <option value="" selected >Filter by</option>
+                    <option value="id" data-direction="desc">Latest items</option>
+                    <option value="price" data-direction="desc">Highest price</option>
+                    <option value="price" data-direction="asc">Lowest price</option>
                 </select>
             </div>
         </div>
     </div>
     
     <div class="products">
-        <div class="item">
             {% for product in pagination %}
-                <div class="col-md-3">
-                    <a href="{{ path('show_product', {'id' : product.id}) }}">
-                        <img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" class="img-thumbnail center-block" alt="{{ product.name }}" />
-                    </a>
-                    <h4 class="text-center">{{ product.name }}</h4>
-                    <p class="text-center">&euro;{{ product.price }} </p>
-                    <input type="number" class="form-control text-center" value="{{ product.quantity }}">
-                    <a class="btn btn-success btn-sm center-block" href="{{ path('add_to_cart', {'id' : product.id}) }}"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></a>
+                <div class="item" data-product-id="{{ product.id }}">
+                    <div class="col-md-3">
+                        <a href="{{ path('show_product', {'id' : product.id}) }}">
+                            <img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" class="img-thumbnail center-block" alt="{{ product.name }}" />
+                        </a>
+                        <h4 class="text-center">{{ product.name }}</h4>
+                        <p class="text-center">&euro;{{ product.price }} </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="number" class="quantity form-control text-center" value="1" min="0">
+                            </div>
+                            <div class="col-md-3">
+                                <span class="quantity-left text-center">{{ product.quantity }} left</span>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="add-to-cart">
+                                    <button type="button" class="btn btn-success btn-sm center-block">
+                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
-        </div>
     </div>
 
     <div class="col-md-2 col-md-offset-5">

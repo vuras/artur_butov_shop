@@ -51,8 +51,14 @@ class CartManager
      */
     public function addToCart(Product $product)
     {
+        if($this->existsInCart($product)){
+            $productInCart = $this->cart->getProduct($product);
+            $product->updateQuantity($productInCart->getQuantity());
+            $this->removeFromCart($productInCart);
+        }
+        
         $this->cart->addProduct($product);
-        $this->cart->setTotal($product->getPrice());
+        $this->cart->updateTotal($product->getQuantity() * $product->getPrice());
         
         return true;
     }
@@ -65,13 +71,33 @@ class CartManager
     public function removeFromCart(Product $product)
     {
         $this->cart->removeProduct($product);
-        $this->cart->setTotal(-abs($product->getPrice()));
+        $this->cart->updateTotal(-abs($product->getPrice()));
         
         return $this->cart;
     }
     
+    /**
+     * 
+     * @return boolean
+     */
     public function isEmpty()
     {
         return $this->cart->getProducts()->isEmpty();
+    }
+    
+    /**
+     * 
+     * @param Product $product
+     * @return boolean
+     */
+    public function existsInCart(Product $product)
+    {
+        foreach($this->cart->getProducts() as $p){
+            if($p->getId() === $product->getId()){
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
