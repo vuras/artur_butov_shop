@@ -21,7 +21,8 @@
                   <ul class="nav navbar-nav">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
-                        <li><a href="{{ path('my_products') }}">My products</a></li>
+                        <li><a href="{{ path('your_products') }}">Your products</a></li>
+                        <li><a href="{{ path('your_purchases') }}">Your purchases</a></li>
                         <li><a href="{{ path('new_product') }}">Sell Product</a></li>
                         <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
                     {% else %}    

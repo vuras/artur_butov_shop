@@ -28,6 +28,11 @@ class Product
     protected $name;
     
     /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $category;
+    
+    /**
      * @ORM\Column(type="float")
      */
     protected $price;
@@ -299,5 +304,29 @@ class Product
     public function getPurchases()
     {
         return $this->purchases;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     *
+     * @return Product
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

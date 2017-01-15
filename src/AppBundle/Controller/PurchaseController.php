@@ -13,5 +13,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PurchaseController extends Controller
 {
-    //put your code here
+    /**
+     * @Route("your_purchases", name="your_purchases")
+     */
+    public function listPurchases(Request $request)
+    {
+        $purchases = $this->get('app.purchase_repository_manager')->getAll($this->getUser());
+        $pagination = $this->get('app.paginator')->paginate($purchases);
+        
+    	return $this->render('AppBundle:Purchase:list_user_purchases.html.twig', [
+    		'pagination' => $pagination,
+	]);
+    }
 }

@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -26,8 +27,14 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $categories = $options['categories'];
+        
         $builder
             ->add('name', TextType::class, array(
+                'attr' => array('class' => 'form-control')
+            ))
+            ->add('category', ChoiceType::class, array(
+                'choices' => array_flip($categories),
                 'attr' => array('class' => 'form-control')
             ))
             ->add('description', TextareaType::class, array(
@@ -58,6 +65,7 @@ class ProductType extends AbstractType
     public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver) 
     {
         $resolver->setDefaults(array('data_class' => 'AppBundle\Entity\Product' ));
+        $resolver->setRequired('categories');
     }
         
     /**

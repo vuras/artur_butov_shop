@@ -1,0 +1,7 @@
+parameters:
+    categories:
+        - Clothing
+        - Toys
+        - Electronics
+        - Food & Beverages
+        - Parfume

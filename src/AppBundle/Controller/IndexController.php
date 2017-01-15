@@ -13,7 +13,7 @@ class IndexController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $products = $this->container->get('app.product_repository_manager')->getProducts();
+        $products = $this->container->get('app.product_repository_manager')->getAll();
         $pagination = $this->container->get('app.paginator')->paginate($products);
         
     	return $this->render('AppBundle:Index:index.html.twig', array(
@@ -27,7 +27,7 @@ class IndexController extends Controller
      */
     public function orderByAction($by, $direction)
     {
-        $products = $this->container->get('app.product_repository_manager')->getOrderedProducts($by, $direction);
+        $products = $this->container->get('app.product_repository_manager')->getOrdered($by, $direction);
         $pagination = $this->container->get('app.paginator')->paginate($products);
         
     	return $this->render('AppBundle:Index:index.html.twig', array(

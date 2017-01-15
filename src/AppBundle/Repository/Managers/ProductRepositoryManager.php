@@ -1,12 +1,10 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace AppBundle\Repository\Managers;
 
-use Knp\Component\Pager\PaginatorInterface;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
+use AppBundle\Repository\Managers\RepositoryManagerInterface;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,7 +17,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *
  * @author Arturas
  */
-class ProductRepositoryManager 
+class ProductRepositoryManager implements RepositoryManagerInterface
 {
     /**
      *
@@ -40,7 +38,7 @@ class ProductRepositoryManager
      * @param UserInterface $user
      * @return type
      */
-    public function getProducts(UserInterface $user = null)
+    public function getAll(UserInterface $user = null)
     {
         if(is_null($user))
             return $this->repository->findAll();
@@ -53,7 +51,7 @@ class ProductRepositoryManager
      * @param int $id
      * @return type
      */
-    public function getProductById($id)
+    public function getById($id)
     {
     	return $this->repository->find($id);
     }
@@ -63,7 +61,7 @@ class ProductRepositoryManager
      * @param string $by
      * @param string $direction
      */
-    public function getOrderedProducts($by, $direction)
+    public function getOrdered($by, $direction)
     {
         return $this->repository->findOrderedBy($by, $direction);
     }

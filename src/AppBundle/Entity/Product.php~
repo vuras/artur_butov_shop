@@ -28,6 +28,11 @@ class Product
     protected $name;
     
     /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $category;
+    
+    /**
      * @ORM\Column(type="float")
      */
     protected $price;
@@ -226,7 +231,7 @@ class Product
      */
     public function __construct()
     {
-        $this->Purchases = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->purchases = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -242,6 +247,20 @@ class Product
 
         return $this;
     }
+    
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Product
+     */
+    public function updateQuantity($quantity)
+    {
+        $this->quantity += $quantity;
+
+        return $this;
+    }
 
     /**
      * Get quantity
@@ -251,5 +270,39 @@ class Product
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * Add purchase
+     *
+     * @param \AppBundle\Entity\PurchaseProduct $purchase
+     *
+     * @return Product
+     */
+    public function addPurchase(\AppBundle\Entity\PurchaseProduct $purchase)
+    {
+        $this->purchases[] = $purchase;
+
+        return $this;
+    }
+
+    /**
+     * Remove purchase
+     *
+     * @param \AppBundle\Entity\PurchaseProduct $purchase
+     */
+    public function removePurchase(\AppBundle\Entity\PurchaseProduct $purchase)
+    {
+        $this->purchases->removeElement($purchase);
+    }
+
+    /**
+     * Get purchases
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPurchases()
+    {
+        return $this->purchases;
     }
 }

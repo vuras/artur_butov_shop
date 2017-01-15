@@ -17,8 +17,11 @@ class ProductController extends Controller
     {
         $product = new Product();
         $product->setUser($this->getUser());
+        $categories = $this->getParameter('categories');
         
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product, [
+            'categories' => $categories
+        ]);
         
         $form->handleRequest($request);
         
@@ -40,7 +43,7 @@ class ProductController extends Controller
      */
     public function showProductAction($id)
     {
-        $product = $this->get('app.product_repository_manager')->getProductById($id);
+        $product = $this->get('app.product_repository_manager')->getById($id);
         
         return $this->render('AppBundle:Product:item.html.twig', [
             'product' => $product
@@ -48,10 +51,10 @@ class ProductController extends Controller
     }
     
     /**
-     * @Route("/my_products", name="my_products")
+     * @Route("/your_products", name="your_products")
      */
-    public function myProductsAction(Request $request){
-        $products = $this->get('app.product_repository_manager')->getProducts($this->getUser());
+    public function yourProductsAction(Request $request){
+        $products = $this->get('app.product_repository_manager')->getAll($this->getUser());
         $pagination = $this->get('app.paginator')->paginate($products);
         
     	return $this->render('AppBundle:Product:list_user_products.html.twig', [
@@ -66,7 +69,7 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        $product = $this->get('app.product_repository_manager')->getProductById($id);
+        $product = $this->get('app.product_repository_manager')->getById($id);
         
         $em->remove($product);
         $em->flush();

@@ -1,12 +1,25 @@
+imports:
+    - { resource: parameters.yml }
+
 services:
     app.product_repository:
         class: Doctrine\ORM\EntityRepository
         factory: 'doctrine.orm.default_entity_manager:getRepository'
         arguments:
             - AppBundle\Entity\Product
+            
+    app.purchase_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: 'doctrine.orm.default_entity_manager:getRepository'
+        arguments:
+            - AppBundle\Entity\Purchase
     
+    app.purchase_repository_manager:
+        class: AppBundle\Repository\Managers\ProductRepositoryManager
+        arguments: [ '@app.purchase_repository']
+        
     app.product_repository_manager:
-        class: AppBundle\Repository\ProductRepositoryManager
+        class: AppBundle\Repository\Managers\ProductRepositoryManager
         arguments: [ '@app.product_repository']
         
     app.cart_manager:

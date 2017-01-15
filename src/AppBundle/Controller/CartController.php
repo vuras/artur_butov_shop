@@ -32,7 +32,7 @@ class CartController extends Controller
      */
     public function addToCartAction(Request $request, $id, $quantity)
     {
-        $product = $this->get('app.product_repository_manager')->getProductById($id);
+        $product = $this->get('app.product_repository_manager')->getById($id);
         $product->setQuantity($quantity);
         
         $cartManager = $this->get('app.cart_manager');
@@ -67,6 +67,8 @@ class CartController extends Controller
         $this->get('app.purchase_manager')->createPurchaseFromCart($cart, $this->getUser());
         $session->remove('cart');
         
+        $this->addFlash('info', 'Purchase completed.');
+        
         return $this->redirectToRoute('index');
     }
     
@@ -78,7 +80,7 @@ class CartController extends Controller
         $session = $request->getSession();
         $cart = $session->get('cart');
         
-        $product = $this->get('app.product_repository_manager')->getProductById($id);
+        $product = $this->get('app.product_repository_manager')->getById($id);
         $cartManager = $this->get('app.cart_manager');
         $cartManager->setCart($cart);
         $cart = $cartManager->removeFromCart($product);
