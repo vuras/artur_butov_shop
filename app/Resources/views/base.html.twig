@@ -20,6 +20,7 @@
                   </div>
                   <ul class="nav navbar-nav">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
                         <li><a href="{{ path('my_products') }}">My products</a></li>
                         <li><a href="{{ path('new_product') }}">Sell Product</a></li>
                         <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
@@ -38,6 +39,7 @@
             {% block javascripts %}
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
                 <script type="text/javascript" src="{{ asset('Assets/js/script.js') }}"></script>
+                <script src="https://use.fontawesome.com/80909b4148.js"></script>
             {% endblock %}
         </div>
     </body>

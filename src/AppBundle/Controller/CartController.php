@@ -38,23 +38,50 @@ class CartController extends Controller
      */
     public function addToCartAction(Request $request, $id)
     {
-        $session = $request->getSession();
-        
         $product = $this->get('app.product_manager')->getProductById($id);
         
         $cartManager = $this->get('app.cart_manager');
-        $cartManager->addToCart($product);
         
+        $session = $request->getSession();
+        if($session->has('cart')){
+            $cartManager->setCart($session->get('cart'));
+        }
+            
+        $cartManager->addToCart($product);
         $session->set('cart', $cartManager->getCart());
         
         return $this->redirectToRoute('index');
     }
     
     /**
-     * @Route("buy", name="buy")
+     * @Route("checkout", name="checkout")
      */
-    public function buyAction(Request $request)
+    public function checkoutAction(Request $request)
     {
-        return new \Symfony\Component\HttpFoundation\Response();
+        $session = $request->getSession();
+        $cart = $session->get('cart');
+        
+        $this->get('app.purchase_manager')->createPurchaseFromCart($cart, $this->getUser());
+        $session->remove('cart');
+        
+        return $this->redirectToRoute('index');
+    }
+    
+    /**
+     * @Route("remove_from_cart/{id}", name="remove_from_cart")
+     */
+    public function removeFromCartAction(Request $request, $id)
+    {
+        $session = $request->getSession();
+        $cart = $session->get('cart');
+        
+        $product = $this->get('app.product_manager')->getProductById($id);
+        $cartManager = $this->get('app.cart_manager');
+        $cartManager->setCart($cart);
+        $cart = $cartManager->removeFromCart($product);
+        
+        $cartManager->isEmpty() ? $session->remove('cart') : $session->set('cart', $cart);
+        
+        return $this->redirectToRoute('cart');
     }
 }

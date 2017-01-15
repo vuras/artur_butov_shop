@@ -65,9 +65,9 @@ class Product
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="product")
      */
-    protected $orders;
+    protected $purchases;
 
     /**
      * Get id
@@ -226,7 +226,7 @@ class Product
      */
     public function __construct()
     {
-        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->purchases = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -254,36 +254,36 @@ class Product
     }
 
     /**
-     * Add order
+     * Add purchase
      *
-     * @param \AppBundle\Entity\OrderProduct $order
+     * @param \AppBundle\Entity\PurchaseProduct $purchase
      *
      * @return Product
      */
-    public function addOrder(\AppBundle\Entity\OrderProduct $order)
+    public function addPurchase(\AppBundle\Entity\PurchaseProduct $purchase)
     {
-        $this->orders[] = $order;
+        $this->purchases[] = $purchase;
 
         return $this;
     }
 
     /**
-     * Remove order
+     * Remove purchase
      *
-     * @param \AppBundle\Entity\OrderProduct $order
+     * @param \AppBundle\Entity\PurchaseProduct $purchase
      */
-    public function removeOrder(\AppBundle\Entity\OrderProduct $order)
+    public function removePurchase(\AppBundle\Entity\PurchaseProduct $purchase)
     {
-        $this->orders->removeElement($order);
+        $this->purchases->removeElement($purchase);
     }
 
     /**
-     * Get orders
+     * Get purchases
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrders()
+    public function getPurchases()
     {
-        return $this->orders;
+        return $this->purchases;
     }
 }

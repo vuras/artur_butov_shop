@@ -24,9 +24,9 @@ class User extends BaseUser
     protected $products;
     
     /**
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Purchase", mappedBy="user")
      */
-    protected $orders;
+    protected $purchases;
 
     public function __construct()
     {
@@ -69,36 +69,36 @@ class User extends BaseUser
     }
 
     /**
-     * Add order
+     * Add purchase
      *
-     * @param \AppBundle\Entity\Order $order
+     * @param \AppBundle\Entity\Purchase $purchase
      *
      * @return User
      */
-    public function addOrder(\AppBundle\Entity\Order $order)
+    public function addPurchase(\AppBundle\Entity\Purchase $purchase)
     {
-        $this->orders[] = $order;
+        $this->purchases[] = $purchase;
 
         return $this;
     }
 
     /**
-     * Remove order
+     * Remove purchase
      *
-     * @param \AppBundle\Entity\Order $order
+     * @param \AppBundle\Entity\Purchase $purchase
      */
-    public function removeOrder(\AppBundle\Entity\Order $order)
+    public function removePurchase(\AppBundle\Entity\Purchase $purchase)
     {
-        $this->orders->removeElement($order);
+        $this->purchases->removeElement($purchase);
     }
 
     /**
-     * Get orders
+     * Get purchases
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrders()
+    public function getPurchases()
     {
-        return $this->orders;
+        return $this->purchases;
     }
 }

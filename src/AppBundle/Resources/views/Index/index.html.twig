@@ -21,9 +21,10 @@
                     <a href="{{ path('show_product', {'id' : product.id}) }}">
                         <img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" class="img-thumbnail center-block" alt="{{ product.name }}" />
                     </a>
-                    <h3 class="text-center">{{ product.name }}</h3>
-                    <p class="text-center">{{ product.price }} </p>
-                    <a class="form-control text-center" href="{{ path('add_to_cart', {'id' : product.id}) }}">Add to cart</a>
+                    <h4 class="text-center">{{ product.name }}</h4>
+                    <p class="text-center">&euro;{{ product.price }} </p>
+                    <input type="number" class="form-control text-center" value="{{ product.quantity }}">
+                    <a class="btn btn-success btn-sm center-block" href="{{ path('add_to_cart', {'id' : product.id}) }}"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></a>
                 </div>
             {% endfor %}
         </div>

@@ -37,6 +37,15 @@ class CartManager
     
     /**
      * 
+     * @param Cart $cart
+     */
+    public function setCart(Cart $cart)
+    {
+        $this->cart = $cart;
+    }
+    
+    /**
+     * 
      * @param Product $product
      * @return boolean
      */
@@ -46,5 +55,23 @@ class CartManager
         $this->cart->setTotal($product->getPrice());
         
         return true;
+    }
+    
+    /**
+     * 
+     * @param Product $product
+     * @return Cart
+     */
+    public function removeFromCart(Product $product)
+    {
+        $this->cart->removeProduct($product);
+        $this->cart->setTotal(-abs($product->getPrice()));
+        
+        return $this->cart;
+    }
+    
+    public function isEmpty()
+    {
+        return $this->cart->getProducts()->isEmpty();
     }
 }

@@ -21,9 +21,9 @@
                     <a href="{{ path('show_product', {'id' : product.id}) }}">
                         <img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" class="img-thumbnail center-block" alt="{{ product.name }}" />
                     </a>
-                    <h3 class="text-center">{{ product.name }}</h3>
-                    <p class="text-center">{{ product.description }} </p>
-                    <a class="form-control text-center" href="{{ path('remove_product', {'id' : product.id}) }}">Remove product</a>
+                    <h4 class="text-center">{{ product.name }}</h4>
+                    <p class="text-center">{{ product.price }} </p>
+                    <a class="btn btn-danger btn-sm center-block" href="{{ path('remove_product', {'id' : product.id}) }}"><i class="fa fa-trash-o"></i></a>
                 </div>
             {% endfor %}
         </div>

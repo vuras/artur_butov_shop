@@ -2,14 +2,52 @@
 
 {% block body %}
     
-    {% if cart.products is empty %}
+    {% if cart is empty or cart.products is empty %}
         <p>Cart is empty</p>
     {% else %}
-        {% for product in cart.products %}
-            <p>{{ product.name }}</p>
-        {% endfor %}
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:50%">Product</th>
+                    <th style="width:10%">Price</th>
+                    <th style="width:8%">Quantity</th>
+                    <th style="width:22%" class="text-center">Subtotal</th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in cart.products %}
+                    <tr>
+                        <td data-th="Product">
+                                <div class="row">
+                                        <div class="col-sm-2 hidden-xs"><img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" alt="..." class="img-responsive"/></div>
+                                        <div class="col-sm-10">
+                                                <h4 class="nomargin">{{ product.name }}</h4>
+                                                <p>{{ product.description }}</p>
+                                        </div>
+                                </div>
+                        </td>
+                        <td data-th="Price">&euro;{{ product.price }}</td>
+                        <td data-th="Quantity">
+                                <input type="number" class="form-control text-center" value="{{ product.quantity }}">
+                        </td>
+                        <td data-th="Subtotal" class="text-center">&euro;1.99</td>
+                        <td class="actions" data-th="">
+                                <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                                <a href="{{ path('remove_from_cart', { 'id' : product.id }) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>								
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                        <td><a href="{{ path('index') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                        <td colspan="2" class="hidden-xs"></td>
+                        <td class="hidden-xs text-center"><strong>Total &euro;{{ cart.total }}</strong></td>
+                        <td><a href="{{ path('checkout') }}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+                </tr>
+            </tfoot>
+        </table>
     {% endif %}
-    
-    <a class="form-control" href="{{ path('buy') }}">Buy</a>
     
 {% endblock %}

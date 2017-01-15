@@ -6,11 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="order")
+ * @ORM\Table(name="purchase")
  *
  * @author artbut
  */
-class Order 
+class Purchase
 {
     /**
      * @ORM\Column(type="integer")
@@ -25,12 +25,12 @@ class Order
     protected $total;
     
     /**
-     * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="purchase")
      */
     protected $products;
     
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="purchases")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -79,11 +79,11 @@ class Order
     /**
      * Add product
      *
-     * @param \AppBundle\Entity\OrderProduct $product
+     * @param \AppBundle\Entity\PurchaseProduct $product
      *
      * @return Order
      */
-    public function addProduct(\AppBundle\Entity\OrderProduct $product)
+    public function addProduct(\AppBundle\Entity\PurchaseProduct $product)
     {
         $this->products[] = $product;
 
@@ -93,9 +93,9 @@ class Order
     /**
      * Remove product
      *
-     * @param \AppBundle\Entity\OrderProduct $product
+     * @param \AppBundle\Entity\PurchaseProduct $product
      */
-    public function removeProduct(\AppBundle\Entity\OrderProduct $product)
+    public function removeProduct(\AppBundle\Entity\PurchaseProduct $product)
     {
         $this->products->removeElement($product);
     }

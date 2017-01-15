@@ -24,6 +24,14 @@ class Cart
     protected $total;
     
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
      * 
      * @return array
      */
@@ -50,6 +58,19 @@ class Cart
         $this->products[] = $product;
         
         return $this;
+    }
+    
+    /**
+     * 
+     * @param Product $product
+     */
+    public function removeProduct(Product $product)
+    {
+        foreach($this->products as $p){
+            if($p->getId() === $product->getId()){
+                $this->products->removeElement($this->products->current());
+            }
+        }
     }
     
     /**

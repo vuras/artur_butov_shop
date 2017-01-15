@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * OrderProduct
  *
- * @ORM\Table(name="order_product")
+ * @ORM\Table(name="purchase_product")
  * @ORM\Entity
  */
-class OrderProduct
+class PurchaseProduct
 {
     /**
      * @var int
@@ -24,15 +24,15 @@ class OrderProduct
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Order", inversedBy="products")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Purchase", inversedBy="products")
+     * @ORM\JoinColumn(name="purchase_id", referencedColumnName="id")
      */
-    protected $order;
+    protected $purchase;
     
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="purchase")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
@@ -77,30 +77,6 @@ class OrderProduct
     public function getQuantity()
     {
         return $this->quantity;
-    }
-
-    /**
-     * Set order
-     *
-     * @param \AppBundle\Entity\Order $order
-     *
-     * @return OrderProduct
-     */
-    public function setOrder(\AppBundle\Entity\Order $order = null)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return \AppBundle\Entity\Order
-     */
-    public function getOrder()
-    {
-        return $this->order;
     }
 
     /**

@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
@@ -35,7 +36,10 @@ class ProductType extends AbstractType
             ->add('price', MoneyType::class, array(
                 'currency' => false,
                 'attr' => array('class' => 'form-control')
-            ))    
+            ))
+            ->add('quantity', NumberType::class, array(
+                'attr' => array('class' => 'form-control')
+            ))
             ->add('imageFile', VichImageType::class, array(
                 'required' => false,
                 'allow_delete' => true, // not mandatory, default is true

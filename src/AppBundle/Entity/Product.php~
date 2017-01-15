@@ -65,9 +65,9 @@ class Product
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="product")
      */
-    protected $orders;
+    protected $purchases;
 
     /**
      * Get id
@@ -220,5 +220,36 @@ class Product
     public function getImageName()
     {
         return $this->imageName;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Purchases = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Product
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 }
