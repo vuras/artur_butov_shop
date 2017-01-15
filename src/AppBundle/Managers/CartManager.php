@@ -71,7 +71,7 @@ class CartManager
     public function removeFromCart(Product $product)
     {
         $this->cart->removeProduct($product);
-        $this->cart->updateTotal(-abs($product->getPrice()));
+        $this->cart->updateTotal(-abs($product->getQuantity() * $product->getPrice()));
         
         return $this->cart;
     }
