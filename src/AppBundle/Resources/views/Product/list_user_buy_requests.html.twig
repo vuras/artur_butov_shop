@@ -2,12 +2,15 @@
 
 {% block body %}
     
+    <h2 class="text-center">Requests to buy from you</h2>
+    
     <table id="cart" class="table table-hover table-condensed">
         <thead>
             <tr>
-                <th style="width:33%">Product</th>
-                <th style="width:33%">Price</th>
-                <th style="width:34%">Quantity</th>
+                <th style="width:25%">Product</th>
+                <th style="width:25%">Price</th>
+                <th style="width:25%">Quantity</th>
+                <th style="width:25%">From</th>
             </tr>
         </thead>
         <tbody>
@@ -27,13 +30,16 @@
                         <td data-th="Quantity">
                             {{ purchaseProduct.quantity }}
                         </td>
+                        <td data-th="From">
+                            {{ purchaseProduct.purchase.user.username }}
+                        </td>
                     </tr>
                 {% endfor %}
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
-                    <td><a href="{{ path('your_purchases') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to your purchases</a></td>
+                    <td><a href="{{ path('index') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue shopping</a></td>
                     <td colspan="2" class="hidden-xs"></td>
                     <td class="navigation">	
                         {{ knp_pagination_render(pagination) }}
