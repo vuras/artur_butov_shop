@@ -21,7 +21,11 @@ h3 {
     color: #6495ED;
 }
 
-.item img {
+.item .row{
+    padding-bottom: 20px;
+}
+
+.item .main {
     height: 200px;
 }
 
@@ -32,6 +36,7 @@ h3 {
 }
 
 .thumbnail img {
+    height: auto;
     width: 100%;
 }
 

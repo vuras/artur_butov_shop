@@ -21,7 +21,7 @@
             {% for product in pagination %}
                 <div class="col-md-3">
                     <a href="{{ path('show_product', {'id' : product.id}) }}">
-                        <img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" class="img-thumbnail center-block" alt="{{ product.name }}" />
+                        <img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" class="main img-thumbnail center-block" alt="{{ product.name }}" />
                     </a>
                     <h4 class="text-center">{{ product.name }}</h4>
                     <p class="text-center">&euro;{{ product.price }} </p>
