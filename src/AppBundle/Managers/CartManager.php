@@ -4,6 +4,7 @@ namespace AppBundle\Managers;
 
 use AppBundle\Entity\Cart;
 use AppBundle\Entity\Product;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Description of CartManager
@@ -14,6 +15,12 @@ class CartManager
 {
     /**
      *
+     * @var Session 
+     */
+    private $session;
+    
+    /**
+     *
      * @var Cart
      */
     public $cart;
@@ -21,9 +28,14 @@ class CartManager
     /**
      * Constructor
      */
-    public function __construct() 
+    public function __construct(Session $session) 
     {
-        $this->cart = new Cart();
+        $this->session = $session;
+        if($this->session->has('cart')){
+            $this->cart = $this->session->get('cart');
+        } else {
+            $this->cart = new Cart();
+        }
     }
     
     /**
@@ -67,6 +79,7 @@ class CartManager
         
         $this->cart->addProduct($product);
         $this->cart->updateTotal($product->getQuantity() * $product->getPrice());
+        $this->saveCart();
         
         return true;
     }
@@ -81,6 +94,7 @@ class CartManager
         $productInCart = $this->cart->getProduct($product);
         $this->cart->removeProduct($productInCart);
         $this->cart->updateTotal(-abs($productInCart->getQuantity() * $productInCart->getPrice()));
+        $this->isEmpty() ? $this->removeCart() : $this->saveCart();
         
         return $this->cart;
     }
@@ -108,5 +122,21 @@ class CartManager
         }
         
         return false;
+    }
+    
+    /**
+     * Saves Cart
+     */
+    public function saveCart()
+    {
+        $this->session->set('cart', $this->cart);
+    }
+    
+    /**
+     * Removes Cart
+     */
+    public function removeCart()
+    {
+        $this->session->remove('cart');
     }
 }

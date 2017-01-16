@@ -42,10 +42,4 @@ class PurchaseManager
         
         return $this->purchase;
     }
-    
-    public function addPurchase(PurchaseProduct $purchase)
-    {
-        $this->em->persist($purchase);
-        $this->em->flush();
-    }
 }

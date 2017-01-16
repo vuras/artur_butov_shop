@@ -24,6 +24,7 @@ services:
         
     app.cart_manager:
         class: AppBundle\Managers\CartManager
+        arguments: [ '@session' ]
         
     app.purchase_manager:
         class: AppBundle\Managers\PurchaseManager

@@ -19,8 +19,7 @@ class CartController extends Controller
      */
     public function listItemsAction(Request $request)
     {
-        $session = $request->getSession();
-        $cart = $session->get('cart');
+        $cart = $this->get('app.cart_manager')->getCart();
         
         return $this->render('AppBundle:Cart:list_items.html.twig', [
             'cart' => $cart
@@ -35,21 +34,15 @@ class CartController extends Controller
         $product = $this->get('app.product_repository_manager')->getById($id);
         $product->setQuantity($quantity);
         
-        $cartManager = $this->get('app.cart_manager');
-        
-        $session = $request->getSession();
-        if($session->has('cart')){
-            $cartManager->setCart($session->get('cart'));
-        }
-            
-        $cartManager->addToCart($product, $update);
-        $session->set('cart', $cartManager->getCart());
-        
-        $this->addFlash('info', 'Product added to cart');
+        $cartManager = $this->get('app.cart_manager')->addToCart($product, $update);
         
         if($update){
+            $this->addFlash('info', 'Cart updated');
+            
             return $this->redirectToRoute('cart');
         }
+        
+        $this->addFlash('info', 'Product added to cart');
         
         return $this->redirectToRoute('index');
     }
@@ -65,11 +58,9 @@ class CartController extends Controller
             return $this->redirectToRoute('fos_user_security_login');
         }
         
-        $session = $request->getSession();
-        $cart = $session->get('cart');
-        
+        $cart = $this->get('app.cart_manager')->getCart();
         $this->get('app.purchase_manager')->createPurchaseFromCart($cart, $this->getUser());
-        $session->remove('cart');
+        $this->get('app.cart_manager')->removeCart();
         
         $this->addFlash('info', 'Purchase completed.');
         
@@ -81,15 +72,8 @@ class CartController extends Controller
      */
     public function removeFromCartAction(Request $request, $id)
     {
-        $session = $request->getSession();
-        $cart = $session->get('cart');
-        
         $product = $this->get('app.product_repository_manager')->getById($id);
-        $cartManager = $this->get('app.cart_manager');
-        $cartManager->setCart($cart);
-        $cart = $cartManager->removeFromCart($product);
-        
-        $cartManager->isEmpty() ? $session->remove('cart') : $session->set('cart', $cart);
+        $cartManager = $this->get('app.cart_manager')->removeFromCart($product);
         
         return $this->redirectToRoute('cart');
     }
