@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 {% for product in cart.products %}
-                    <tr>
+                    <tr class="item" data-product-id="{{ product.id }}" data-update="1">
                         <td data-th="Product">
                                 <div class="row">
                                         <div class="col-sm-2 hidden-xs"><img src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" alt="..." class="img-responsive"/></div>
@@ -29,11 +29,13 @@
                         </td>
                         <td data-th="Price">&euro;{{ product.price }}</td>
                         <td data-th="Quantity">
-                                <input type="number" class="form-control text-center" value="{{ product.quantity }}" min="0">
+                                <input type="number" class="quantity form-control text-center" value="{{ product.quantity }}" min="1" max="{{ product.quantity }}">
                         </td>
-                        <td data-th="Subtotal" class="text-center">&euro;{{ product.quantity * product.price }}</td>
+                        <td data-th="Subtotal" class="sub-total text-center">&euro;{{ product.quantity * product.price }}</td>
                         <td class="actions" data-th="">
+                            <div class="add-to-cart">
                                 <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                            </div>
                                 <a href="{{ path('remove_from_cart', { 'id' : product.id }) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>								
                         </td>
                     </tr>
@@ -43,7 +45,7 @@
                 <tr>
                         <td><a href="{{ path('index') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                         <td colspan="2" class="hidden-xs"></td>
-                        <td class="hidden-xs text-center"><strong>Total &euro;{{ cart.total }}</strong></td>
+                        <td class="total hidden-xs text-center"><strong>Total &euro;{{ cart.total }}</strong></td>
                         <td><a href="{{ path('checkout') }}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
                 </tr>
             </tfoot>

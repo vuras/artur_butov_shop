@@ -1,22 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    
-    <div class="purchases">
-        <div class="item">
-            {% for purchase in pagination %}
-                <div class="row">
-                    <h4 class="text-center">{{ purchase.id }}</h4>
-                    <p class="text-center">&euro;{{ purchase.total }} </p>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
 
-    <div class="col-md-2 col-md-offset-5">
-            <div class="navigation">	
-            {{ knp_pagination_render(pagination) }}
-        </div>
+    <div class="purchases">
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:50%" class="text-center">Purchase ID</th>
+                    <th style="width:50%" class="text-center">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for purchase in pagination %}
+                    <tr>
+                        <td data-th="Purchase ID" class="text-center">
+                            <a href="{{ path('show_purchase', { 'id' : purchase.id }) }}">{{ purchase.id }}</a>
+                        </td>
+                        <td data-th="Subtotal" class="text-center">
+                            &euro;{{ purchase.total }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                        <td><a href="{{ path('index') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                        <td class="navigation">	
+                            {{ knp_pagination_render(pagination) }}
+                        </td>
+                </tr>
+            </tfoot>
+        </table>
+                
     </div>
 
 {% endblock %}

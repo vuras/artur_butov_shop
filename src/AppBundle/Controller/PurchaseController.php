@@ -25,4 +25,16 @@ class PurchaseController extends Controller
     		'pagination' => $pagination,
 	]);
     }
+    
+    /**
+     * @Route("/show_purchase/{id}", name="show_purchase")
+     */
+    public function showProductAction($id)
+    {
+        $purchase = $this->get('app.purchase_repository_manager')->getById($id);
+        
+        return $this->render('AppBundle:Purchase:item.html.twig', [
+            'purchase' => $purchase
+        ]);
+    }
 }

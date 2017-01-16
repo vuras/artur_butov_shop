@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:33%">Product</th>
+                <th style="width:33%">Price</th>
+                <th style="width:34%">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchaseProduct in purchase.products %}
+                <tr>
+                    <td data-th="Product">
+                            <div class="row">
+                                    <div class="col-sm-2 hidden-xs"><img src="{{ app.request.getUriForPath(vich_uploader_asset(purchaseProduct.product, 'imageFile')) }}" alt="..." class="img-responsive"/></div>
+                                    <div class="col-sm-10">
+                                            <h4 class="nomargin">{{ purchaseProduct.product.name }}</h4>
+                                            <p>{{ purchaseProduct.product.description }}</p>
+                                    </div>
+                            </div>
+                    </td>
+                    <td data-th="Price">&euro;{{ purchaseProduct.product.price }}</td>
+                    <td data-th="Quantity">
+                        {{ purchaseProduct.quantity }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                    <td><a href="{{ path('your_purchases') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to your purchases</a></td>
+                    <td colspan="2" class="hidden-xs"></td>
+                    <td class="hidden-xs text-center"><strong>Total &euro;{{ purchase.total }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    
+{% endblock %}

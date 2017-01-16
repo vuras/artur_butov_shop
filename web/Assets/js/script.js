@@ -1,14 +1,11 @@
-$(document).ready(function(){
-    
-    orderBy();
-    addToCart();
-});
+orderBy();
+addToCart();
 
 function orderBy()
 {
     var $select = $('#order-by');
     
-    $select.change(function(){
+    $(document).on('change', '#order-by', function(){
         $selectedOption = $select.find('option:selected');
         $orderBy = $selectedOption.val();
         $direction = $selectedOption.data('direction');
@@ -28,22 +25,23 @@ function orderBy()
 
 function addToCart()
 {
-    var $submit = $('.add-to-cart');
-    
-    $submit.click(function(){
+    $(document).on('click', '.add-to-cart button', function(){
         $item = $(this).closest('.item');
         var $quantity = $item.find('.quantity').val();
         var $productId = $item.data('product-id');
+        var $update = $item.data('update');
         
         $.post(Routing.generate('add_to_cart',
         {
             'id' : $productId,
-            'quantity' : $quantity
+            'quantity' : $quantity,
+            'update' : $update
         }),
             function(html){
                 $('.alerts').replaceWith($(html).find('.alerts'));
-                $(this).find('button').removeClass('btn-success');
-                $(this).find('button').addClass('btn-info');
+                if($('#cart') !== null){
+                    $('#cart').empty().append($(html).find('#cart').children());
+                }
             }
         );
     });

@@ -49,12 +49,20 @@ class CartManager
      * @param Product $product
      * @return boolean
      */
-    public function addToCart(Product $product)
+    public function addToCart(Product $product, $update = false)
     {
         if($this->existsInCart($product)){
             $productInCart = $this->cart->getProduct($product);
-            $product->updateQuantity($productInCart->getQuantity());
-            $this->removeFromCart($productInCart);
+            if($update){
+                $this->cart->updateTotal(-abs($productInCart->getQuantity() * $productInCart->getPrice()));
+                $productInCart->setQuantity($product->getQuantity());
+            } else{
+                $productInCart->updateQuantity($product->getQuantity());
+            }
+            
+            $this->cart->updateTotal($product->getQuantity() * $product->getPrice());
+            
+            return true;
         }
         
         $this->cart->addProduct($product);
@@ -70,8 +78,9 @@ class CartManager
      */
     public function removeFromCart(Product $product)
     {
-        $this->cart->removeProduct($product);
-        $this->cart->updateTotal(-abs($product->getQuantity() * $product->getPrice()));
+        $productInCart = $this->cart->getProduct($product);
+        $this->cart->removeProduct($productInCart);
+        $this->cart->updateTotal(-abs($productInCart->getQuantity() * $productInCart->getPrice()));
         
         return $this->cart;
     }

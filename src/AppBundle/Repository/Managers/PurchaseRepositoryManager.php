@@ -40,4 +40,14 @@ class PurchaseRepositoryManager implements RepositoryManagerInterface
         return $this->repository->findByUser($user);
     }
     
+    /**
+     * 
+     * @param int $id
+     * @return type
+     */
+    public function getById($id)
+    {
+    	return $this->repository->find($id);
+    }
+    
 }

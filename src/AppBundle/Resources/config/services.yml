@@ -15,7 +15,7 @@ services:
             - AppBundle\Entity\Purchase
     
     app.purchase_repository_manager:
-        class: AppBundle\Repository\Managers\ProductRepositoryManager
+        class: AppBundle\Repository\Managers\PurchaseRepositoryManager
         arguments: [ '@app.purchase_repository']
         
     app.product_repository_manager:

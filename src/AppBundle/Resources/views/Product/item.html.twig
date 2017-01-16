@@ -2,25 +2,30 @@
 
 {% block body %}
     
-    <div class="item" data-product-id="{{ product.id }}">
+    <div class="item" data-product-id="{{ product.id }}" data-update="0">
         <div class="thumbnail">
             <img class="img-responsive" src="{{ app.request.getUriForPath(vich_uploader_asset(product, 'imageFile')) }}" alt="">
-            <div class="caption-full">
-                <h4 class="pull-right"><Strong>&euro;{{ product.price }}</strong></h4>
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.description }}</p>
-            </div>
-                <div class="col-md-4">
-                    <input type="number" class="quantity form-control text-center" value="1" min="0">
-                </div>
-                <div class="col-md-3">
-                    <span class="quantity-left text-center">{{ product.quantity }} left</span>
-                </div>
-                <div class="col-md-3">
-                    <div class="add-to-cart">
-                        <button type="button" class="btn btn-success btn-sm center-block">
-                            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                        </button>
+            <div class="description">    
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="caption-full">
+
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.description }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pull-right">
+                        <h4 class="text-center pull-right"><strong>Price: &euro;{{ product.price }}</strong></h4>
+
+                        <input type="number" name="quantity" class="quantity form-control text-center" value="1" min="1" max="{{ product.quantity }}">
+
+                        <p class="quantity-left text-center">{{ product.quantity }} left</p>
+
+                        <div class="add-to-cart">
+                            <button type="button" class="btn btn-success center-block form-control">
+                                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

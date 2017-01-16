@@ -28,9 +28,9 @@ class CartController extends Controller
     }
     
     /**
-     * @Route("add_to_cart/{id}/{quantity}", options={"expose"=true}, name="add_to_cart")
+     * @Route("add_to_cart/{id}/{quantity}/{update}", options={"expose"=true}, name="add_to_cart")
      */
-    public function addToCartAction(Request $request, $id, $quantity)
+    public function addToCartAction(Request $request, $id, $quantity, $update)
     {
         $product = $this->get('app.product_repository_manager')->getById($id);
         $product->setQuantity($quantity);
@@ -42,10 +42,14 @@ class CartController extends Controller
             $cartManager->setCart($session->get('cart'));
         }
             
-        $cartManager->addToCart($product);
+        $cartManager->addToCart($product, $update);
         $session->set('cart', $cartManager->getCart());
         
         $this->addFlash('info', 'Product added to cart');
+        
+        if($update){
+            return $this->redirectToRoute('cart');
+        }
         
         return $this->redirectToRoute('index');
     }
