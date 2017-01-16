@@ -27,7 +27,7 @@ class Product
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Length(
-     *  min=5,
+     *  min=3,
      *  max=100
      * )
      */

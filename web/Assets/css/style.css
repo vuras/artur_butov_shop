@@ -21,6 +21,10 @@ h3 {
     color: #6495ED;
 }
 
+.item img {
+    height: 200px;
+}
+
 .quantity-left {
     position: relative;
     top: 5px;

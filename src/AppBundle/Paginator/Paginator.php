@@ -44,7 +44,7 @@ class Paginator
         $pagination = $this->paginator->paginate(
 	        $items,
 	        $this->request->getCurrentRequest()->query->getInt('page', 1) /*page number*/,
-	        12 /*limit per page*/
+	        8 /*limit per page*/
     	);
         
         return $pagination;
