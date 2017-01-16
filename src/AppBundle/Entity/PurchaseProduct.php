@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * PurchaseProduct
@@ -39,6 +40,7 @@ class PurchaseProduct
     
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     protected $quantity;
 

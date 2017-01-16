@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -24,21 +25,29 @@ class Product
     
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *  min=5,
+     *  max=100
+     * )
      */
     protected $name;
     
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     protected $category;
     
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank()
      */
     protected $price;
     
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     protected $quantity;
 
