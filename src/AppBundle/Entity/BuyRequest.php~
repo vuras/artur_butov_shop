@@ -1,0 +1,46 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * BuyRequest
+ *
+ * @ORM\Table(name="buy_request")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BuyRequestRepository")
+ */
+class BuyRequest
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="purchase")
+     */
+    protected $products;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="buyRequests")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+    
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

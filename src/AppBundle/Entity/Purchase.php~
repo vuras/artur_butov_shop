@@ -57,7 +57,7 @@ class Purchase
      *
      * @param float $total
      *
-     * @return Order
+     * @return Purchase
      */
     public function setTotal($total)
     {
@@ -81,7 +81,7 @@ class Purchase
      *
      * @param \AppBundle\Entity\PurchaseProduct $product
      *
-     * @return Order
+     * @return Purchase
      */
     public function addProduct(\AppBundle\Entity\PurchaseProduct $product)
     {
@@ -115,7 +115,7 @@ class Purchase
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return Order
+     * @return Purchase
      */
     public function setUser(\AppBundle\Entity\User $user = null)
     {

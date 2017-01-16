@@ -27,6 +27,11 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Purchase", mappedBy="user")
      */
     protected $purchases;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="BuyRequest", mappedBy="user")
+     */
+    protected $buyRequests;
 
     public function __construct()
     {
@@ -68,4 +73,37 @@ class User extends BaseUser
         return $this->products;
     }
 
+    /**
+     * Add purchase
+     *
+     * @param \AppBundle\Entity\Purchase $purchase
+     *
+     * @return User
+     */
+    public function addPurchase(\AppBundle\Entity\Purchase $purchase)
+    {
+        $this->purchases[] = $purchase;
+
+        return $this;
+    }
+
+    /**
+     * Remove purchase
+     *
+     * @param \AppBundle\Entity\Purchase $purchase
+     */
+    public function removePurchase(\AppBundle\Entity\Purchase $purchase)
+    {
+        $this->purchases->removeElement($purchase);
+    }
+
+    /**
+     * Get purchases
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPurchases()
+    {
+        return $this->purchases;
+    }
 }

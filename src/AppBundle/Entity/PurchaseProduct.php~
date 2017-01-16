@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OrderProduct
+ * PurchaseProduct
  *
  * @ORM\Table(name="purchase_product")
  * @ORM\Entity
@@ -32,7 +32,7 @@ class PurchaseProduct
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="purchase")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="purchases")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
@@ -60,7 +60,7 @@ class PurchaseProduct
      *
      * @param integer $quantity
      *
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setQuantity($quantity)
     {
@@ -84,7 +84,7 @@ class PurchaseProduct
      *
      * @param \AppBundle\Entity\Product $product
      *
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setProduct(\AppBundle\Entity\Product $product = null)
     {
@@ -101,5 +101,29 @@ class PurchaseProduct
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set purchase
+     *
+     * @param \AppBundle\Entity\Purchase $purchase
+     *
+     * @return PurchaseProduct
+     */
+    public function setPurchase(\AppBundle\Entity\Purchase $purchase = null)
+    {
+        $this->purchase = $purchase;
+
+        return $this;
+    }
+
+    /**
+     * Get purchase
+     *
+     * @return \AppBundle\Entity\Purchase
+     */
+    public function getPurchase()
+    {
+        return $this->purchase;
     }
 }

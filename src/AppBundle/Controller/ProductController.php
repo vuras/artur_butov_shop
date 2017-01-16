@@ -63,6 +63,19 @@ class ProductController extends Controller
     }
     
     /**
+     * @Route("your_buy_requests", name="your_buy_requests")
+     */
+    public function listBuyRequests(Request $request)
+    {
+        $products = $this->get('app.product_repository_manager')->getAll($this->getUser());
+        $pagination = $this->get('app.paginator')->paginate($products);
+        
+    	return $this->render('AppBundle:Product:list_user_buy_requests.html.twig', [
+    		'pagination' => $pagination,
+	]);
+    }
+    
+    /**
      * @Route("remove_product/{id}", name="remove_product")
      */
     public function removeProductAction($id)
