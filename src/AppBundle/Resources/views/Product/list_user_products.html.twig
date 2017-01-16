@@ -25,6 +25,8 @@
                     </a>
                     <h4 class="text-center">{{ product.name }}</h4>
                     <p class="text-center">&euro;{{ product.price }} </p>
+                    <p class="quantity-left text-center">{{ product.quantity }} left</p>
+                    <a class="btn btn-warning btn-sm center-block" href="{{ path('edit_product', {'id' : product.id}) }}"><i class="fa fa-pencil"></i></a>
                     <a class="btn btn-danger btn-sm center-block" href="{{ path('remove_product', {'id' : product.id}) }}"><i class="fa fa-trash-o"></i></a>
                 </div>
             {% endfor %}

@@ -15,7 +15,13 @@ class ProductController extends Controller
      */
     public function newProductAction(Request $request)
     {
-        $product = new Product();
+        $id = $request->query->get('id', false);
+        if($id){ 
+            $product = $this->get('app.product_repository_manager')->getById($id);
+        } else {
+           $product = new Product();
+        }
+        
         $product->setUser($this->getUser());
         $categories = $this->getParameter('categories');
         
@@ -35,6 +41,16 @@ class ProductController extends Controller
         
         return $this->render('AppBundle:Product:new.html.twig', [ 
             'form' => $form->createView()
+        ]);
+    }
+    
+    /**
+     * @Route("/edit_product/{id}", name="edit_product")
+     */
+    public function editProductAction(Request $request, $id)
+    {
+        return $this->redirectToRoute('new_product', [
+            'id' => $id
         ]);
     }
     
@@ -88,6 +104,36 @@ class ProductController extends Controller
         $em->flush();
         
         return $this->redirectToRoute('my_products');
+    }
+    
+    /**
+     * @Route("order_by/{by}/{direction}", options={"expose"=true}, name="order_by")
+     */
+    public function orderByAction($by, $direction)
+    {
+        $products = $this->container->get('app.product_repository_manager')->getOrdered($by, $direction);
+        $pagination = $this->container->get('app.paginator')->paginate($products);
+        $categories = $this->getParameter('categories');
+        
+    	return $this->render('AppBundle:Index:index.html.twig', array(
+            'pagination' => $pagination,
+            'categories' => $categories
+        ));
+    }
+    
+    /**
+     * @Route("filter_by/{by}/{value}", options={"expose"=true}, name="filter_by")
+     */
+    public function filterByAction($by, $value)
+    {
+        $products = $this->container->get('app.product_repository_manager')->getFiltered($by, $value);
+        $pagination = $this->container->get('app.paginator')->paginate($products);
+        $categories = $this->getParameter('categories');
+        
+    	return $this->render('AppBundle:Index:index.html.twig', array(
+            'pagination' => $pagination,
+            'categories' => $categories
+        ));
     }
     
 }
