@@ -43,3 +43,7 @@ services:
     app.paginator:
         class: AppBundle\Paginator\Paginator
         arguments: [ '@knp_paginator', '@request_stack' ]
+        
+    app.form_handler:
+        class: AppBundle\Form\Handler\FormHandler
+        arguments: [ '@form.factory', '@doctrine.orm.default_entity_manager' ]

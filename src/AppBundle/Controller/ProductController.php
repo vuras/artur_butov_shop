@@ -16,21 +16,16 @@ class ProductController extends Controller
     public function newProductAction(Request $request)
     {
         $id = $request->query->get('id', false);
-        $productRepositoryManager = $this->get('app.product_repository_manager');
-        $product = $id ? $productRepositoryManager->getById($id) : new Product();
+        $product = $id ? $this->get('app.product_repository_manager')->getById($id) : new Product();
         $product->setUser($this->getUser());
         
-        $categories = $this->getParameter('categories');
-        
-        $form = $this->createForm(ProductType::class, $product, [
-            'categories' => $categories
+        $formHandler = $this->get('app.form_handler');
+        $form = $formHandler->create(ProductType::class, $product, [
+            'categories' => $this->getParameter('categories')
         ]);
         
-        $form->handleRequest($request);
-        
-        if($form->isValid() && $form->isSubmitted()){
-            $productRepositoryManager->add($product);
-            $productRepositoryManager->flush();
+        if($formHandler->handle($request)){
+            $this->addFlash('info', 'Product added to shop!');
             
             return $this->redirectToRoute('index');
         }
@@ -98,7 +93,7 @@ class ProductController extends Controller
         $productRepositoryManager->remove($product);
         $productRepositoryManager->flush();
         
-        return $this->redirectToRoute('my_products');
+        return $this->redirectToRoute('your_products');
     }
     
     /**
