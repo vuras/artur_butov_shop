@@ -62,7 +62,7 @@ class CartManager
      * @param boolean $updates
      * @return boolean
      */
-    public function addToCart(Product $product, $update = false)
+    public function addToCart(Product $product, int $update = 0)
     {
         if($this->existsInCart($product)){
             $this->updateProductInCart($product, $update);
@@ -83,7 +83,7 @@ class CartManager
      * @param boolean $update
      * @return boolean
      */
-    public function updateProductInCart(Product $product, $update = false)
+    public function updateProductInCart(Product $product, int $update = 0)
     {
         $productInCart = $this->cart->getProduct($product);
         

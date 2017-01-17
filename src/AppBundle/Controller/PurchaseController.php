@@ -29,7 +29,7 @@ class PurchaseController extends Controller
     /**
      * @Route("/show_purchase/{id}", name="show_purchase")
      */
-    public function showPurchaseAction($id)
+    public function showPurchaseAction(int $id)
     {
         $purchase = $this->get('app.purchase_repository_manager')->getById($id);
         

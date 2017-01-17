@@ -3,8 +3,8 @@
 namespace AppBundle\Repository\Managers;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Security\Core\User\UserInterface;
-use AppBundle\Repository\Managers\RepositoryManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\Repository\Managers\AbstractRepositoryManager;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,43 +17,26 @@ use AppBundle\Repository\Managers\RepositoryManagerInterface;
  *
  * @author Arturas
  */
-class ProductRepositoryManager implements RepositoryManagerInterface
+class ProductRepositoryManager extends AbstractRepositoryManager
 {
+    /**
+     *
+     * @var EntityManagerInterface 
+     */
+    protected $em;
+    
     /**
      *
      * @var EntityRepository 
      */
-    private $repository;
+    protected $repository;
     
     /**
      * 
      * @param EntityRepository $repository
      */
-    public function __construct(EntityRepository $repository){
-        $this->repository = $repository;
-    }
-    
-    /**
-     * 
-     * @param UserInterface $user
-     * @return type
-     */
-    public function getAll(UserInterface $user = null)
-    {
-        if(is_null($user))
-            return $this->repository->findAll();
-        
-        return $this->repository->findByUser($user);
-    }
-    
-    /**
-     * 
-     * @param int $id
-     * @return type
-     */
-    public function getById($id)
-    {
-    	return $this->repository->find($id);
+    public function __construct(EntityManagerInterface $em, EntityRepository $repository){
+        parent::__construct($em, $repository);
     }
     
     /**
@@ -61,7 +44,7 @@ class ProductRepositoryManager implements RepositoryManagerInterface
      * @param string $by
      * @param string $direction
      */
-    public function getOrdered($by, $direction)
+    public function getOrdered(string $by, string $direction)
     {
         return $this->repository->findOrderedBy($by, $direction);
     }
@@ -71,7 +54,7 @@ class ProductRepositoryManager implements RepositoryManagerInterface
      * @param string $by
      * @param string $value
      */
-    public function getFiltered($by, $value)
+    public function getFiltered(string $by, string $value)
     {
         return $this->repository->findBy([
             $by => $value

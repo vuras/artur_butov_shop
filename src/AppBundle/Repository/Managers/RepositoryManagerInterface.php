@@ -22,5 +22,31 @@ interface RepositoryManagerInterface
      * 
      * @param int $id
      */
-    public function getById($id);
+    public function getById(int $id);
+    
+    /**
+     * Adds object to repository
+     * 
+     * @param type $object
+     */
+    public function add($object);
+    
+    /**
+     * Removes object to repository
+     * 
+     * @param type $object
+     */
+    public function remove($object);
+    
+    /**
+     * Adds object object to repository
+     * 
+     * @param type $object
+     */
+    public function merge($object);
+    
+    /**
+     * Flushes added object to database
+     */
+    public function flush();
 }

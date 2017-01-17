@@ -16,13 +16,10 @@ class ProductController extends Controller
     public function newProductAction(Request $request)
     {
         $id = $request->query->get('id', false);
-        if($id){ 
-            $product = $this->get('app.product_repository_manager')->getById($id);
-        } else {
-           $product = new Product();
-        }
-        
+        $productRepositoryManager = $this->get('app.product_repository_manager');
+        $product = $id ? $productRepositoryManager->getById($id) : new Product();
         $product->setUser($this->getUser());
+        
         $categories = $this->getParameter('categories');
         
         $form = $this->createForm(ProductType::class, $product, [
@@ -32,9 +29,8 @@ class ProductController extends Controller
         $form->handleRequest($request);
         
         if($form->isValid() && $form->isSubmitted()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
-            $em->flush();
+            $productRepositoryManager->add($product);
+            $productRepositoryManager->flush();
             
             return $this->redirectToRoute('index');
         }
@@ -47,7 +43,7 @@ class ProductController extends Controller
     /**
      * @Route("/edit_product/{id}", name="edit_product")
      */
-    public function editProductAction(Request $request, $id)
+    public function editProductAction(Request $request, int $id)
     {
         return $this->redirectToRoute('new_product', [
             'id' => $id
@@ -57,7 +53,7 @@ class ProductController extends Controller
     /**
      * @Route("/show_product/{id}", name="show_product")
      */
-    public function showProductAction($id)
+    public function showProductAction(int $id)
     {
         $product = $this->get('app.product_repository_manager')->getById($id);
         
@@ -94,14 +90,13 @@ class ProductController extends Controller
     /**
      * @Route("remove_product/{id}", name="remove_product")
      */
-    public function removeProductAction($id)
+    public function removeProductAction(int $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $productRepositoryManager = $this->get('app.product_repository_manager');
+        $product = $productRepositoryManager->getById($id);
         
-        $product = $this->get('app.product_repository_manager')->getById($id);
-        
-        $em->remove($product);
-        $em->flush();
+        $productRepositoryManager->remove($product);
+        $productRepositoryManager->flush();
         
         return $this->redirectToRoute('my_products');
     }
@@ -109,7 +104,7 @@ class ProductController extends Controller
     /**
      * @Route("order_by/{by}/{direction}", options={"expose"=true}, name="order_by")
      */
-    public function orderByAction($by, $direction)
+    public function orderByAction(string $by, string $direction)
     {
         $products = $this->container->get('app.product_repository_manager')->getOrdered($by, $direction);
         $pagination = $this->container->get('app.paginator')->paginate($products);
@@ -124,7 +119,7 @@ class ProductController extends Controller
     /**
      * @Route("filter_by/{by}/{value}", options={"expose"=true}, name="filter_by")
      */
-    public function filterByAction($by, $value)
+    public function filterByAction(string $by, string $value)
     {
         $products = $this->container->get('app.product_repository_manager')->getFiltered($by, $value);
         $pagination = $this->container->get('app.paginator')->paginate($products);

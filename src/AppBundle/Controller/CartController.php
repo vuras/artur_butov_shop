@@ -29,7 +29,7 @@ class CartController extends Controller
     /**
      * @Route("add_to_cart/{id}/{quantity}/{update}", options={"expose"=true}, name="add_to_cart")
      */
-    public function addToCartAction(Request $request, $id, $quantity, $update)
+    public function addToCartAction(Request $request, $id, int $quantity, int $update)
     {
         $product = $this->get('app.product_repository_manager')->getById($id);
         $product->setQuantity($quantity);
@@ -58,19 +58,20 @@ class CartController extends Controller
             return $this->redirectToRoute('fos_user_security_login');
         }
         
-        $cart = $this->get('app.cart_manager')->getCart();
+        $cartManager = $this->get('app.cart_manager');
+        $cart = $cartManager->getCart();
         $this->get('app.purchase_manager')->createPurchaseFromCart($cart, $this->getUser());
-        $this->get('app.cart_manager')->removeCart();
+        $cartManager->removeCart();
         
         $this->addFlash('info', 'Purchase completed.');
         
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('your_purchases');
     }
     
     /**
      * @Route("remove_from_cart/{id}", name="remove_from_cart")
      */
-    public function removeFromCartAction(Request $request, $id)
+    public function removeFromCartAction(Request $request, int $id)
     {
         $product = $this->get('app.product_repository_manager')->getById($id);
         $cartManager = $this->get('app.cart_manager')->removeFromCart($product);

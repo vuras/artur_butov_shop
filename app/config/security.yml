@@ -32,3 +32,4 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/checkout, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/your, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/new, role: IS_AUTHENTICATED_FULLY }

@@ -5,7 +5,7 @@ namespace AppBundle\Managers;
 use AppBundle\Entity\Purchase;
 use AppBundle\Entity\PurchaseProduct;
 use AppBundle\Entity\Cart;
-use Doctrine\ORM\EntityManager;
+use AppBundle\Repository\Managers\RepositoryManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -15,30 +15,49 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class PurchaseManager 
 {
-    private $em;
+    /**
+     *
+     * @var RepositoryManagerInterface 
+     */
+    private $purchaseRepositoryManager;
     
+    /**
+     *
+     * @var Purchase 
+     */
     private $purchase;
     
-    public function __construct(EntityManager $em) 
+    /**
+     * 
+     * @param RepositoryManagerInterface $purchaseRepositoryManager
+     */
+    public function __construct(RepositoryManagerInterface $purchaseRepositoryManager) 
     {
-        $this->em = $em;
+        $this->purchaseRepositoryManager = $purchaseRepositoryManager;
         $this->purchase = new Purchase();
     }
 
+    /**
+     * Creates a Purchase from products added in cart
+     * 
+     * @param Cart $cart
+     * @param UserInterface $user
+     * @return Purchase
+     */
     public function createPurchaseFromCart(Cart $cart, UserInterface $user)
     {
         $this->purchase->setTotal($cart->getTotal());
         $this->purchase->setUser($user);
-        $this->em->persist($this->purchase);
+        $this->purchaseRepositoryManager->add($this->purchase);
         foreach($cart->getProducts() as $product){
             $purchaseProduct = new PurchaseProduct();
             $purchaseProduct->setPurchase($this->purchase);
             $purchaseProduct->setProduct($product);
             $purchaseProduct->setQuantity($product->getQuantity());
-            $this->em->merge($purchaseProduct);
+            $this->purchaseRepositoryManager->merge($purchaseProduct);
         }
         
-        $this->em->flush();
+        $this->purchaseRepositoryManager->flush();
         
         return $this->purchase;
     }

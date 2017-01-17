@@ -14,13 +14,23 @@ services:
         arguments:
             - AppBundle\Entity\Purchase
     
+    app.abstract_repository_manager:
+        abstract: true
+        arguments: 
+            - '@doctrine.orm.default_entity_manager'
+            - Doctrine\ORM\EntityRepository
+    
     app.purchase_repository_manager:
         class: AppBundle\Repository\Managers\PurchaseRepositoryManager
-        arguments: [ '@app.purchase_repository']
+        parent: app.abstract_repository_manager
+        arguments: 
+            index_1: '@app.purchase_repository'
         
     app.product_repository_manager:
         class: AppBundle\Repository\Managers\ProductRepositoryManager
-        arguments: [ '@app.product_repository']
+        parent: app.abstract_repository_manager
+        arguments:
+            index_1: '@app.product_repository'
         
     app.cart_manager:
         class: AppBundle\Managers\CartManager
@@ -28,7 +38,7 @@ services:
         
     app.purchase_manager:
         class: AppBundle\Managers\PurchaseManager
-        arguments: [ '@doctrine.orm.default_entity_manager' ]
+        arguments: [ '@app.purchase_repository_manager' ]
         
     app.paginator:
         class: AppBundle\Paginator\Paginator

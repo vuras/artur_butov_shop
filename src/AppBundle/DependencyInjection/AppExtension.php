@@ -14,6 +14,11 @@ use Symfony\Component\Config\FileLocator;
  */
 class AppExtension implements ExtensionInterface
 {
+    /**
+     * 
+     * @param array $configs
+     * @param ContainerBuilder $container
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader(
@@ -23,6 +28,10 @@ class AppExtension implements ExtensionInterface
         $loader->load('services.yml');
     }
 
+    /**
+     * 
+     * @return string
+     */
     public function getAlias() 
     {
         return 'app';
