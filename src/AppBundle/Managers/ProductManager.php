@@ -41,9 +41,9 @@ class ProductManager
     public function updateQuantities(\Doctrine\Common\Collections\ArrayCollection $products)
     {
         foreach($products as $product){
-            $productChanged = $this->productRepositoryManager->getById($product->getId());
-            $productChanged->setQuantity($productChanged->getQuantity() - $product->getQuantity());
-            $this->productRepositoryManager->add($productChanged);
+            $productInDb = $this->productRepositoryManager->getById($product->getId());
+            $productInDb->setQuantity($productInDb->getQuantity() - $product->getQuantity());
+            $this->productRepositoryManager->add($productInDb);
         }
         
         $this->productRepositoryManager->flush();

@@ -65,16 +65,14 @@ class CartManager
     public function addToCart(Product $product, int $update = 0)
     {
         if($this->existsInCart($product)){
-            $this->updateProductInCart($product, $update);
-            
-            return true;
+            return $this->updateProductInCart($product, $update);
         }
         
         $this->cart->addProduct($product);
         $this->cart->updateTotal($product->getQuantity() * $product->getPrice());
         $this->saveCart();
         
-        return true;
+        return $this->cart;
     }
     
     /**
@@ -96,7 +94,7 @@ class CartManager
 
         $this->cart->updateTotal($product->getQuantity() * $product->getPrice());
 
-        return true;
+        return $this->cart;
     }
     
     /**

@@ -34,7 +34,7 @@ class CartController extends Controller
         $product = $this->get('app.product_repository_manager')->getById($id);
         $product->setQuantity($quantity);
         
-        $cartManager = $this->get('app.cart_manager')->addToCart($product, $update);
+        $this->get('app.cart_manager')->addToCart($product, $update);
         
         if($update){
             $this->addFlash('info', 'Cart updated');
