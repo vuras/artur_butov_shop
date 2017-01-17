@@ -61,6 +61,7 @@ class CartController extends Controller
         $cartManager = $this->get('app.cart_manager');
         $cart = $cartManager->getCart();
         $this->get('app.purchase_manager')->createPurchaseFromCart($cart, $this->getUser());
+        $this->get('app.product_manager')->updateQuantities($cart->getProducts());
         $cartManager->removeCart();
         
         $this->addFlash('info', 'Purchase completed.');
