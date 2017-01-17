@@ -1,5 +1,6 @@
 orderBy();
 addToCart();
+updateBadge();
 
 function orderBy()
 {
@@ -42,8 +43,19 @@ function addToCart()
                 if($('#cart') !== null){
                     $('#cart').empty().append($(html).find('#cart').children());
                 }
+                updateBadge();
             }
         );
     });
     
+}
+
+function updateBadge()
+{
+    $(document).ready(function(){
+        $.post(Routing.generate('get_cart_count'), function(count){
+            count = JSON.parse(count);
+            $('.badge').text(count);
+        });
+    });
 }

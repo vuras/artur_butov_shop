@@ -78,4 +78,14 @@ class CartController extends Controller
         
         return $this->redirectToRoute('cart');
     }
+    
+    /**
+     * @Route("get_cart_count", options={"expose"=true}, name="get_cart_count")
+     */
+    public function getCartCountAction()
+    {
+        $count = $this->get('app.cart_manager')->getCartProductCount();
+        
+        return new \Symfony\Component\HttpFoundation\JsonResponse($count);
+    }
 }

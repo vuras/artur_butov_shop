@@ -154,4 +154,14 @@ class CartManager
     {
         $this->session->remove('cart');
     }
+    
+    /**
+     * Returns product count in cart
+     * 
+     * @return int
+     */
+    public function getCartProductCount()
+    {
+        return count($this->cart->getProducts());
+    }
 }
