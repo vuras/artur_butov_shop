@@ -25,6 +25,11 @@ interface RepositoryManagerInterface
     public function getById(int $id);
     
     /**
+     * Removes item by data provided
+     */
+    public function removeById(int $id);
+    
+    /**
      * Adds object to repository
      * 
      * @param type $object

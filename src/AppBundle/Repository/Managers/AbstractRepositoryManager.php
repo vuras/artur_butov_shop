@@ -58,6 +58,18 @@ abstract class AbstractRepositoryManager implements RepositoryManagerInterface
     	return $this->repository->find($id);
     }
     
+    
+    /**
+     * 
+     * @param array $data
+     */
+    public function removeById(int $id)
+    {
+        $object = $this->getById($id);
+        $this->remove($object);
+        $this->flush();
+    }
+    
     /**
      * 
      * @param type $object

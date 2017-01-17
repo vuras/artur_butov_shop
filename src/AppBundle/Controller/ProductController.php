@@ -88,10 +88,9 @@ class ProductController extends Controller
     public function removeProductAction(int $id)
     {
         $productRepositoryManager = $this->get('app.product_repository_manager');
-        $product = $productRepositoryManager->getById($id);
+        $product = $productRepositoryManager->removeById($id);
         
-        $productRepositoryManager->remove($product);
-        $productRepositoryManager->flush();
+        $this->addFlash('info', 'Item removed from shop');
         
         return $this->redirectToRoute('your_products');
     }
