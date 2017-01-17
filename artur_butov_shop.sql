@@ -1,24 +1,17 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: Jan 16, 2017 at 09:55 PM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 7.0.9
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `artur_butov_shop`
 --
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`) VALUES
+(1, 'test', 'test', 'test@test.com', 'test@test.com', 1, NULL, '$2y$13$BAjyR1Q0P8u6FQsM0EjonO2iyQbJdjlkPSP976gycsf03wH/4UPZy', '2017-01-16 20:10:17', NULL, NULL, 'a:0:{}'),
+(2, 'test2', 'test2', 'test2@test.com', 'test2@test.com', 1, NULL, '$2y$13$lwxSNCKG2HbHuIOaG1Xjb.JTdYvME7qSVAcQiq.G28JVkWEM.zFhK', '2017-01-16 20:38:23', NULL, NULL, 'a:0:{}'),
+(3, 'test3', 'test3', 'test3@test.com', 'test3@test.com', 1, NULL, '$2y$13$1qNubQfvEzNL4pKnoS6bpOEdZIt.JxjsYmf/YOnk2MU2wXrky1JMW', '2017-01-16 21:54:39', NULL, NULL, 'a:0:{}'),
+(4, 'test4', 'test4', 'test4@test.com', 'test4@test.com', 1, NULL, '$2y$13$xAOvWa20boKJTIBVSo0/zuMsuIvKL2mU6w1/7Z7yHS929rMBQa6LS', '2017-01-16 20:31:31', NULL, NULL, 'a:0:{}');
 
 --
 -- Dumping data for table `product`
@@ -51,17 +44,3 @@ INSERT INTO `purchase_product` (`id`, `purchase_id`, `product_id`, `quantity`) V
 (1, 1, 3, 3),
 (2, 1, 2, 3),
 (3, 1, 4, 2);
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`) VALUES
-(1, 'test', 'test', 'test@test.com', 'test@test.com', 1, NULL, '$2y$13$BAjyR1Q0P8u6FQsM0EjonO2iyQbJdjlkPSP976gycsf03wH/4UPZy', '2017-01-16 20:10:17', NULL, NULL, 'a:0:{}'),
-(2, 'test2', 'test2', 'test2@test.com', 'test2@test.com', 1, NULL, '$2y$13$lwxSNCKG2HbHuIOaG1Xjb.JTdYvME7qSVAcQiq.G28JVkWEM.zFhK', '2017-01-16 20:38:23', NULL, NULL, 'a:0:{}'),
-(3, 'test3', 'test3', 'test3@test.com', 'test3@test.com', 1, NULL, '$2y$13$1qNubQfvEzNL4pKnoS6bpOEdZIt.JxjsYmf/YOnk2MU2wXrky1JMW', '2017-01-16 21:54:39', NULL, NULL, 'a:0:{}'),
-(4, 'test4', 'test4', 'test4@test.com', 'test4@test.com', 1, NULL, '$2y$13$xAOvWa20boKJTIBVSo0/zuMsuIvKL2mU6w1/7Z7yHS929rMBQa6LS', '2017-01-16 20:31:31', NULL, NULL, 'a:0:{}');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
