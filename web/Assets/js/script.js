@@ -1,6 +1,7 @@
 orderBy();
 addToCart();
 updateBadge();
+blockQuantityEnter();
 
 function orderBy()
 {
@@ -58,4 +59,12 @@ function updateBadge()
             $('.badge').text(count);
         });
     });
+}
+
+function blockQuantityEnter()
+{
+    $('.quantity').keydown(function(e) {
+        e.preventDefault();
+        return false;
+     });
 }
